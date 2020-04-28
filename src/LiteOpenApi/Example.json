@@ -1,0 +1,555 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Carvana.VehicleReturnReasons API 1",
+    "description": "Carvana.VehicleReturnReasons API",
+    "contact": {
+      "name": "Carvana"
+    },
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/mktops/vehicle-return-reasons"
+    }
+  ],
+  "paths": {
+    "/api/v1/status": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppStatus"
+                },
+                "example": "{\n  \"message\": \"Carvana.VehicleReturnReasons Service online.\",\n  \"version\": \"1.0.0\",\n  \"statusDateTime\": \"2020-04-28T00:09:09.9770294+00:00\"\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/status/log": {
+      "post": {
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/status/authorized": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppStatus"
+                },
+                "example": "{\n  \"message\": \"Carvana.VehicleReturnReasons Service online.\",\n  \"version\": \"1.0.0\",\n  \"statusDateTime\": \"2020-04-28T00:09:09.9790972+00:00\"\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/status/health": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppHealthDetailsResponse"
+                },
+                "example": "{\n  \"overallHealth\": \"Healthy\",\n  \"components\": {\n    \"sql Connection\": \"Healthy\",\n    \"customer Microservice\": \"Healthy\"\n  }\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vehiclereturnreasons/allvalidreasonselections": {
+      "get": {
+        "tags": [
+          "VehicleReturnReasons"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnReasonsListResponseResult"
+                },
+                "example": "{\n  \"reasonCategories\": [\n    {\n      \"category\": \"Unannotated Interior Cosmetics\",\n      \"reasons\": [\n        {\n          \"reason\": \"Imperfection visible on website; missed annotation\",\n          \"details\": [\n            \"Bad Odor\",\n            \"Carpet Stain\",\n            \"Cleanliness\",\n            \"Scrapes in plastic panels\",\n            \"Seat fabric tear\",\n            \"Seat stain\"\n          ]\n        },\n        {\n          \"reason\": \"Imperfection not visible on website\",\n          \"details\": [\n            \"Bad Odor\",\n            \"Carpet Stain\",\n            \"Cleanliness\",\n            \"Scrapes in plastic panels\",\n            \"Seat fabric tear\",\n            \"Seat stain\"\n          ]\n        }\n      ]\n    },\n    {\n      \"category\": \"Mechanical\",\n      \"reasons\": [\n        {\n          \"reason\": \"Battery\"\n        },\n        {\n          \"reason\": \"Brakes\"\n        },\n        {\n          \"reason\": \"Dashboard Light\"\n        },\n        {\n          \"reason\": \"Driveability\"\n        },\n        {\n          \"reason\": \"Electrical\"\n        },\n        {\n          \"reason\": \"Engine\"\n        },\n        {\n          \"reason\": \"Heating and Cooling\"\n        },\n        {\n          \"reason\": \"Oil/Filters\"\n        },\n        {\n          \"reason\": \"Transmission\"\n        }\n      ]\n    }\n  ]\n}"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehiclereturnreasons": {
+      "post": {
+        "tags": [
+          "VehicleReturnReasons"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReturnReasonsRequest"
+              },
+              "example": "{\n  \"vehicleId\": \"403177\",\n  \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n  \"referenceId\": \"e8f02f03-fb6c-4a8f-9dd7-335f38a1ee26\",\n  \"referenceIdType\": \"ReferenceIdType\",\n  \"reasons\": [\n    {\n      \"category\": \"Mechanical\",\n      \"reason\": \"Battery\",\n      \"detail\": \"No Detail\",\n      \"note\": \"Dead Battery won't charge\"\n    },\n    {\n      \"category\": \"Annotated Interior Cosmetics\",\n      \"reason\": \"Annotation looks worse in person\",\n      \"detail\": \"Carpet Stain\",\n      \"note\": \"Customer didn't realize the extent of the stain.\"\n    }\n  ]\n}"
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReturnReasonsRequest"
+              },
+              "example": "{\n  \"vehicleId\": \"403177\",\n  \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n  \"referenceId\": \"e8f02f03-fb6c-4a8f-9dd7-335f38a1ee26\",\n  \"referenceIdType\": \"ReferenceIdType\",\n  \"reasons\": [\n    {\n      \"category\": \"Mechanical\",\n      \"reason\": \"Battery\",\n      \"detail\": \"No Detail\",\n      \"note\": \"Dead Battery won't charge\"\n    },\n    {\n      \"category\": \"Annotated Interior Cosmetics\",\n      \"reason\": \"Annotation looks worse in person\",\n      \"detail\": \"Carpet Stain\",\n      \"note\": \"Customer didn't realize the extent of the stain.\"\n    }\n  ]\n}"
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReturnReasonsRequest"
+              },
+              "example": "{\n  \"vehicleId\": \"403177\",\n  \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n  \"referenceId\": \"e8f02f03-fb6c-4a8f-9dd7-335f38a1ee26\",\n  \"referenceIdType\": \"ReferenceIdType\",\n  \"reasons\": [\n    {\n      \"category\": \"Mechanical\",\n      \"reason\": \"Battery\",\n      \"detail\": \"No Detail\",\n      \"note\": \"Dead Battery won't charge\"\n    },\n    {\n      \"category\": \"Annotated Interior Cosmetics\",\n      \"reason\": \"Annotation looks worse in person\",\n      \"detail\": \"Carpet Stain\",\n      \"note\": \"Customer didn't realize the extent of the stain.\"\n    }\n  ]\n}"
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReturnReasonsRequest"
+              },
+              "example": "{\n  \"vehicleId\": \"403177\",\n  \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n  \"referenceId\": \"e8f02f03-fb6c-4a8f-9dd7-335f38a1ee26\",\n  \"referenceIdType\": \"ReferenceIdType\",\n  \"reasons\": [\n    {\n      \"category\": \"Mechanical\",\n      \"reason\": \"Battery\",\n      \"detail\": \"No Detail\",\n      \"note\": \"Dead Battery won't charge\"\n    },\n    {\n      \"category\": \"Annotated Interior Cosmetics\",\n      \"reason\": \"Annotation looks worse in person\",\n      \"detail\": \"Carpet Stain\",\n      \"note\": \"Customer didn't realize the extent of the stain.\"\n    }\n  ]\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehiclereturnreasons/vehicleid/{vehicleid}": {
+      "get": {
+        "tags": [
+          "VehicleReturnReasons"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleReturnReasonsResponse"
+                },
+                "example": "{\n  \"returnReasons\": [\n    {\n      \"reasonId\": \"111\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n      \"referenceId\": \"cc8af762-07ff-4d9e-a7ea-34cdbd717a4a\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"675\",\n          \"category\": \"Mechanical\",\n          \"reason\": \"Battery\",\n          \"note\": \"Dead Battery won't charge\"\n        },\n        {\n          \"reasonDetailId\": \"479\",\n          \"category\": \"Annotated Interior Cosmetics\",\n          \"reason\": \"Annotation looks worse in person\",\n          \"detail\": \"Carpet Stain\",\n          \"note\": \"Customer didn't realize the extent of the stain.\"\n        }\n      ]\n    },\n    {\n      \"reasonId\": \"222\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"Mr.Spock@carvana.com\",\n      \"referenceId\": \"d781d1e0-5c44-488e-accc-0cd6aff8b816\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"234\",\n          \"category\": \"Unannotated Interior Cosmetics\",\n          \"reason\": \"Imperfection visible on website; missed annotation\",\n          \"note\": \"Scrapes in plastic panels\"\n        }\n      ]\n    }\n  ]\n}"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehiclereturnreasons/vin/{vin}": {
+      "get": {
+        "tags": [
+          "VehicleReturnReasons"
+        ],
+        "parameters": [
+          {
+            "name": "vin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleReturnReasonsResponse"
+                },
+                "example": "{\n  \"returnReasons\": [\n    {\n      \"reasonId\": \"111\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n      \"referenceId\": \"948bf83b-7087-4657-9f6b-6883e8e143d6\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"675\",\n          \"category\": \"Mechanical\",\n          \"reason\": \"Battery\",\n          \"note\": \"Dead Battery won't charge\"\n        },\n        {\n          \"reasonDetailId\": \"479\",\n          \"category\": \"Annotated Interior Cosmetics\",\n          \"reason\": \"Annotation looks worse in person\",\n          \"detail\": \"Carpet Stain\",\n          \"note\": \"Customer didn't realize the extent of the stain.\"\n        }\n      ]\n    },\n    {\n      \"reasonId\": \"222\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"Mr.Spock@carvana.com\",\n      \"referenceId\": \"c5513f7d-d5bd-4c24-ae71-8c64be7fd6d8\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"234\",\n          \"category\": \"Unannotated Interior Cosmetics\",\n          \"reason\": \"Imperfection visible on website; missed annotation\",\n          \"note\": \"Scrapes in plastic panels\"\n        }\n      ]\n    }\n  ]\n}"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehiclereturnreasons/stocknumber/{stocknumber}": {
+      "get": {
+        "tags": [
+          "VehicleReturnReasons"
+        ],
+        "parameters": [
+          {
+            "name": "stocknumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleReturnReasonsResponse"
+                },
+                "example": "{\n  \"returnReasons\": [\n    {\n      \"reasonId\": \"111\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"James.T.Kirk@carvana.com\",\n      \"referenceId\": \"05950454-7781-4e8b-99c4-22ab14382a0b\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"675\",\n          \"category\": \"Mechanical\",\n          \"reason\": \"Battery\",\n          \"note\": \"Dead Battery won't charge\"\n        },\n        {\n          \"reasonDetailId\": \"479\",\n          \"category\": \"Annotated Interior Cosmetics\",\n          \"reason\": \"Annotation looks worse in person\",\n          \"detail\": \"Carpet Stain\",\n          \"note\": \"Customer didn't realize the extent of the stain.\"\n        }\n      ]\n    },\n    {\n      \"reasonId\": \"222\",\n      \"vehicleId\": \"54321\",\n      \"stockNumber\": \"2000518675\",\n      \"vin\": \"1C6RR6KT4ES102928\",\n      \"submitterEmail\": \"Mr.Spock@carvana.com\",\n      \"referenceId\": \"92418eb7-d540-49ce-a78e-a79325fc8dfa\",\n      \"referenceIdType\": \"ReferenceIdType\",\n      \"reasons\": [\n        {\n          \"reasonDetailId\": \"234\",\n          \"category\": \"Unannotated Interior Cosmetics\",\n          \"reason\": \"Imperfection visible on website; missed annotation\",\n          \"note\": \"Scrapes in plastic panels\"\n        }\n      ]\n    }\n  ]\n}"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AppStatus": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusDateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AppHealthDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "overallHealth": {
+            "type": "string",
+            "nullable": true
+          },
+          "components": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ReasonDetail": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ReasonCategory": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasonDetail"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ReturnReasonsListResponse": {
+        "type": "object",
+        "properties": {
+          "reasonCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasonCategory"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ResultStatus": {
+        "enum": [
+          0,
+          1,
+          200,
+          400,
+          404,
+          409,
+          410,
+          500,
+          503
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ReturnReasonsListResponseResult": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ReturnReasonsListResponse"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ReturnReasonDetail": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AddReturnReasonsRequest": {
+        "type": "object",
+        "properties": {
+          "vehicleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "submitterEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceIdType": {
+            "type": "string",
+            "nullable": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReturnReasonDetail"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "Result": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "GetReasonDetail": {
+        "type": "object",
+        "properties": {
+          "reasonDetailId": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "VehicleReturnReasons": {
+        "type": "object",
+        "properties": {
+          "reasonId": {
+            "type": "string",
+            "nullable": true
+          },
+          "vehicleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "stockNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "vin": {
+            "type": "string",
+            "nullable": true
+          },
+          "submitterEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceIdType": {
+            "type": "string",
+            "nullable": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetReasonDetail"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "VehicleReturnReasonsResponse": {
+        "type": "object",
+        "properties": {
+          "returnReasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleReturnReasons"
+            },
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
